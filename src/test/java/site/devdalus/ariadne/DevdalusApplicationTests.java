@@ -8,7 +8,5 @@ class DevdalusApplicationTests {
 
 	@Test
 	void contextLoads() {
-		System.out.println("test");
-		Assertions.assertThat(1).isEqualTo(0);
 	}
 }
