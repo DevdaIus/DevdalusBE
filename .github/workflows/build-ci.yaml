@@ -1,7 +1,8 @@
-name: Spring Boot Build CI
+name: Spring Boot Build, Test CI
 
 on:
-  ['push']
+  push:
+    branches: [develop, 'feat/**', 'fix/**', 'bug/**']
 
 jobs:
   build:
