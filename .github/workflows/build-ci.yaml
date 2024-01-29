@@ -1,7 +1,7 @@
 name: Spring Boot Build CI
 
 on:
-  push
+  ['push', 'pull_request']
 
 jobs:
   build:
