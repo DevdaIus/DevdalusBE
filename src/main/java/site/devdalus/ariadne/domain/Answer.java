@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import site.devdalus.ariadne.constant.AnswerContentType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -16,6 +17,7 @@ import java.util.UUID;
 
 @Entity
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 public class Answer {
 
