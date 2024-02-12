@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import site.devdalus.ariadne.domain.Answer;
 import site.devdalus.ariadne.domain.Node;
 
+import java.util.UUID;
+
 @Repository
-public interface NodeRepository extends JpaRepository<Node, Long> {
+public interface NodeRepository extends JpaRepository<Node, UUID> {
 }
