@@ -27,7 +27,7 @@ public class NodeController {
     }
 
     @PatchMapping("/{nodeId}")
-    public void update(@RequestBody UpdateNodeDto updateNode, @PathVariable("nodeId") UUID nodeId) {
+    public void update(@RequestBody @Valid UpdateNodeDto updateNode, @PathVariable("nodeId") UUID nodeId) {
 
     }
 
