@@ -11,11 +11,13 @@ public class NodeDto {
     @Getter
     @NoArgsConstructor(force = true)
     public static class CreateNodeDto {
+        @NotNull
         public final UUID parentId;
 
         @NotNull
         public final String content;
 
+        @NotNull
         public final UUID boardId;
 
         @ValidEnum(enumClass = NodeDirection.class)
