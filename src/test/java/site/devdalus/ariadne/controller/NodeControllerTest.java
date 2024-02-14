@@ -64,7 +64,7 @@ class NodeControllerTest {
                         .content(objectMapper.writeValueAsString(updateNodeDto)))
                 .andReturn();
 
-        assertThat(result.getResponse().getStatus()).isEqualTo(200);
+        assertThat(result.getResponse().getStatus()).isEqualTo(204);
     }
 
     @Test
@@ -72,7 +72,7 @@ class NodeControllerTest {
         MvcResult result = mockMvc
                 .perform(delete("/v1/node/" + UUID.randomUUID()))
                 .andReturn();
-        assertThat(result.getResponse().getStatus()).isEqualTo(200);
+        assertThat(result.getResponse().getStatus()).isEqualTo(204);
     }
 
     @Test
