@@ -24,6 +24,9 @@ public class Board {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String subject;
 
+    @Column(name = "root_node_id")
+    private UUID rootNodeId;
+
     @CreatedDate
     @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
     private LocalDateTime createdAt;
