@@ -33,7 +33,7 @@ class BoardControllerTest {
     @Test
     void getBoard() throws Exception {
         MvcResult result = mockMvc
-                .perform(get("/api/v1/board/" + UUID.randomUUID()))
+                .perform(get("/v1/board/" + UUID.randomUUID()))
                 .andReturn();
         assertThat(result.getResponse().getStatus()).isEqualTo(200);
     }
@@ -45,7 +45,7 @@ class BoardControllerTest {
                 .build();
 
         MvcResult result = mockMvc
-                .perform(post("/api/v1/board")
+                .perform(post("/v1/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createBoardDto))
                 ).andReturn();
@@ -64,7 +64,7 @@ class BoardControllerTest {
                 .build();
 
         MvcResult result = mockMvc
-                .perform(patch("/api/v1/board/" + uuid)
+                .perform(patch("/v1/board/" + uuid)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateBoardDto))
                 ).andReturn();
@@ -77,7 +77,7 @@ class BoardControllerTest {
         UUID uuid = UUID.randomUUID();
 
         MvcResult result = mockMvc
-                .perform(delete("/api/v1/board/" + uuid))
+                .perform(delete("/v1/board/" + uuid))
                 .andReturn();
         assertThat(result.getResponse().getStatus()).isEqualTo(204);
     }

@@ -13,7 +13,7 @@ import java.util.UUID;
 import static site.devdalus.ariadne.dto.BoardDto.*;
 
 @RestController
-@RequestMapping("/api/v1/board")
+@RequestMapping("/v1/board")
 public class BoardController {
 
     private final BoardService boardService;
