@@ -2,7 +2,7 @@ name: Spring Boot Build, Test CI
 
 on:
   push:
-    branches: [develop, 'feat/**', 'fix/**', 'bug/**']
+    branches: [develop]
   pull_request:
 
 jobs:
