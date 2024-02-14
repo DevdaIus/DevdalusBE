@@ -1,9 +1,12 @@
+server:
+  servlet:
+    context-path: "/api"
+
 spring:
   profiles:
     active: ${ACTIVE}
 
 ---
-
 spring:
   config:
     activate:
@@ -20,7 +23,6 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
 
 ---
-
 spring:
   config:
     activate:
