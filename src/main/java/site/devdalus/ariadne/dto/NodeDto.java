@@ -8,18 +8,18 @@ import site.devdalus.ariadne.validator.ValidEnum;
 import java.util.UUID;
 
 public class NodeDto {
-    @NoArgsConstructor
     @Getter
+    @NoArgsConstructor(force = true)
     public static class CreateNodeDto {
-        public UUID parentId;
+        public final UUID parentId;
 
         @NotNull
-        public String content;
+        public final String content;
 
-        public UUID boardId;
+        public final UUID boardId;
 
         @ValidEnum(enumClass = NodeDirection.class)
-        public NodeDirection direction;
+        public final NodeDirection direction;
 
         @Builder
         public CreateNodeDto(UUID parentId, String content, UUID boardId, NodeDirection direction) {
@@ -30,11 +30,10 @@ public class NodeDto {
         }
     }
 
-    @NoArgsConstructor
+    @NoArgsConstructor(force = true)
     public static class CreateNodeResponseDto {
-        public UUID nodeId;
-
-        public String summary;
+        public final UUID nodeId;
+        public final String summary;
 
         @Builder
         public CreateNodeResponseDto(UUID nodeId, String summary) {
@@ -43,13 +42,11 @@ public class NodeDto {
         }
     }
 
-    @NoArgsConstructor
+    @NoArgsConstructor(force = true)
     public static class GetNodeResponseDto {
-        public String summary;
-
-        public UUID[] childNodeIds;
-
-        public NodeDirection direction;
+        public final String summary;
+        public final UUID[] childNodeIds;
+        public final NodeDirection direction;
 
         @Builder
         public GetNodeResponseDto(String summary, UUID[] childNodeIds, NodeDirection direction) {
@@ -60,10 +57,10 @@ public class NodeDto {
     }
 
     @Getter
-    @NoArgsConstructor
+    @NoArgsConstructor(force = true)
     public static class UpdateNodeDto {
         @NotNull
-        public String content;
+        public final String content;
 
         @Builder
         public UpdateNodeDto(String content) {
@@ -72,11 +69,11 @@ public class NodeDto {
     }
 
     @Getter
-    @NoArgsConstructor
+    @NoArgsConstructor(force = true)
     public static class GetNodeDetailResponseDto {
-        public String content;
+        public final String content;
 
-        public UUID[] answerIds;
+        public final UUID[] answerIds;
 
         @Builder
         public GetNodeDetailResponseDto(String content, UUID[] answerIds) {
