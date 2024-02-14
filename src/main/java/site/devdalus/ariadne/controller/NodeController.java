@@ -1,7 +1,9 @@
 package site.devdalus.ariadne.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import site.devdalus.ariadne.dto.NodeDto.*;
 import site.devdalus.ariadne.service.NodeService;
@@ -12,13 +14,14 @@ import java.util.UUID;
 @RequestMapping("/v1/node")
 public class NodeController {
     private final NodeService nodeService;
+    @Autowired
     public NodeController(NodeService nodeService) {
         this.nodeService = nodeService;
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateNodeResponseDto create(@RequestBody @Valid CreateNodeDto createNode) {
-        return nodeService.createNode(createNode);
+    public CreateNodeResponseDto create(@RequestBody @Valid CreateNodeDto createNodeDto) {
+        return nodeService.createNode(createNodeDto);
     }
 
     @GetMapping("/{nodeId}")
@@ -27,13 +30,13 @@ public class NodeController {
     }
 
     @PatchMapping("/{nodeId}")
-    public void update(@RequestBody @Valid UpdateNodeDto updateNode, @PathVariable("nodeId") UUID nodeId) {
-
+    public ResponseEntity<Void> update(@RequestBody @Valid UpdateNodeDto updateNode, @PathVariable("nodeId") UUID nodeId) {
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{nodeId}")
-    public void delete(@PathVariable("nodeId") UUID nodeId) {
-
+    public ResponseEntity<Void> delete(@PathVariable("nodeId") UUID nodeId) {
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{nodeId}/detail")
