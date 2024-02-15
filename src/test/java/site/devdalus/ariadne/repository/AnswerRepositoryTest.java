@@ -15,7 +15,6 @@ import site.devdalus.ariadne.domain.Node;
 import java.util.List;
 
 @DataJpaTest
-@EnableJpaAuditing
 @ActiveProfiles("test")
 public class AnswerRepositoryTest {
     @Autowired
@@ -42,6 +41,7 @@ public class AnswerRepositoryTest {
                 .build();
         nodeRepository.save(node);
     }
+
 
     @Test
     public void save() {

@@ -26,22 +26,27 @@ public class BoardController {
 
     @GetMapping("/{boardId}")
     public ResponseEntity<GetBoardResponseDto> getBoard(final @PathVariable UUID boardId) {
-        return null;
+        GetBoardDto getBoardDto = new GetBoardDto(boardId);
+        GetBoardResponseDto getBoardResponseDto = boardService.getBoard(getBoardDto);
+        return ResponseEntity.ok(getBoardResponseDto);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CreateBoardResponseDto createBoard(final @RequestBody @Valid CreateBoardDto createBoardDto) {
-        return null;
+        return boardService.createBoard(createBoardDto);
     }
 
     @PatchMapping("/{boardId}")
     public ResponseEntity<Void> updateBoard(final @RequestBody @Valid UpdateBoardDto updateBoardDto, final @PathVariable UUID boardId) {
+        boardService.updateBoard(updateBoardDto);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{boardId}")
-    public ResponseEntity<Void> deleteBoard(final @PathVariable UUID boardId) {
+    public ResponseEntity<Void> removeBoard(final @PathVariable UUID boardId) {
+        RemoveBoardDto removeBoardDto = new RemoveBoardDto(boardId);
+        boardService.removeBoard(removeBoardDto);
         return ResponseEntity.noContent().build();
     }
 

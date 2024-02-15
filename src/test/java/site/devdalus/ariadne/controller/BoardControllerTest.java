@@ -1,8 +1,6 @@
 package site.devdalus.ariadne.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -10,12 +8,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import site.devdalus.ariadne.dto.BoardDto;
+import site.devdalus.ariadne.domain.Board;
+import site.devdalus.ariadne.repository.BoardRepository;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static site.devdalus.ariadne.dto.BoardDto.*;
 
 
@@ -27,15 +27,27 @@ class BoardControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
+    private BoardRepository boardRepository;
+
+
+    @Autowired
     private ObjectMapper objectMapper;
 
 
     @Test
     void getBoard() throws Exception {
+
+        String subject = "javascript";
+        Board board = boardRepository.save(new Board(subject));
+
         MvcResult result = mockMvc
-                .perform(get("/v1/board/" + UUID.randomUUID()))
+                .perform(get("/v1/board/" + board.getBoardId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.subject").value(subject))
                 .andReturn();
-        assertThat(result.getResponse().getStatus()).isEqualTo(200);
+
+
     }
 
     @Test
@@ -56,24 +68,23 @@ class BoardControllerTest {
     @Test
     void updateBoard() throws Exception {
 
-        UUID uuid = UUID.randomUUID();
-
-        UpdateBoardDto updateBoardDto = UpdateBoardDto.builder()
-                .subject("python")
-                .boardId(uuid)
-                .build();
+        String subject = "javascript";
+        String newSubject = "python";
+        Board board = boardRepository.save(new Board(subject));
+        UpdateBoardDto updateBoardDto = new UpdateBoardDto(board.getBoardId(), newSubject);
 
         MvcResult result = mockMvc
-                .perform(patch("/v1/board/" + uuid)
+                .perform(patch("/v1/board/" + board.getBoardId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateBoardDto))
-                ).andReturn();
+                )
+                .andExpect(status().isNoContent())
+                .andReturn();
 
-        assertThat(result.getResponse().getStatus()).isEqualTo(204);
     }
 
     @Test
-    void deleteBoard() throws Exception {
+    void removeBoard() throws Exception {
         UUID uuid = UUID.randomUUID();
 
         MvcResult result = mockMvc
