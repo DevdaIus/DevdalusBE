@@ -46,9 +46,9 @@ public class BoardController {
     }
 
     @DeleteMapping("/{boardId}")
-    public ResponseEntity<Void> removeBoard(final @RequestBody @Valid RemoveBoardDto removeBoardDto, @PathVariable UUID boardId) {
-
-        removeBoardDto.setBoardId(boardId);
+    public ResponseEntity<Void> removeBoard(@PathVariable UUID boardId) {
+        
+        RemoveBoardDto removeBoardDto = new RemoveBoardDto(boardId);
         boardService.removeBoard(removeBoardDto);
         return ResponseEntity.noContent().build();
     }

@@ -56,7 +56,6 @@ public class AnswerRepositoryTest {
         // when
         answerRepository.save(answer);
         Answer foundAnswer = answerRepository.findAll().getFirst();
-
         // then
         Assertions.assertThat(foundAnswer.getContent()).isEqualTo(answer.getContent());
     }
