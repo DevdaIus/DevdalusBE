@@ -41,39 +41,17 @@ public class NodeService {
                 .nodeDirection(createNodeDto.direction)
                 .build();
         Node savedNode = nodeRepository.save(node);
-        String summary = makeSummary(savedNode.getQuestion());
 
-        return CreateNodeResponseDto
-                .builder()
-                .nodeId(savedNode.getNodeId())
-                .summary(summary)
-                .build();
-    }
-
-    // TODO summary length
-    private String makeSummary(String content) {
-        if (content.length() < 17) return content;
-        return content.substring(0, 15) + "...";
+        return CreateNodeResponseDto.toDto(savedNode);
     }
 
     public GetNodeResponseDto getNode(UUID nodeId) {
         // TODO exception handler
         Node node = nodeRepository.findById(nodeId).orElseThrow(() -> new RuntimeException("Node not found"));
 
-        List<UUID> children = nodeRepository
-                .findByParentId(nodeId)
-                .stream()
-                .map(Node::getNodeId)
-                .toList();
+        List<Node> nodes = nodeRepository.findByParentId(nodeId);
 
-        String summary = makeSummary(node.getQuestion());
-
-        return GetNodeResponseDto
-                .builder()
-                .childNodeIds(children)
-                .summary(summary)
-                .direction(node.getNodeDirection())
-                .build();
+        return GetNodeResponseDto.toDto(node, nodes);
     }
 
     @Transactional
@@ -84,6 +62,7 @@ public class NodeService {
 
     // TODO need transaction ??
     // TODO if transaction, recursive ok ??
+    @Transactional
     public void removeNode(UUID nodeId) {
         List<Node> children = nodeRepository.findByParentId(nodeId);
         for (Node child : children) {
@@ -97,16 +76,8 @@ public class NodeService {
 
     public GetNodeDetailResponseDto getNodeDetail(UUID nodeId) {
         Node node = nodeRepository.findById(nodeId).orElseThrow(() -> new RuntimeException("Node not found"));
-        List<UUID> answerIds = answerRepository
-                .findByNode(node)
-                .stream()
-                .map(Answer::getAnswerId)
-                .toList();
+        List<Answer> answers = answerRepository.findByNode(node);
 
-        return GetNodeDetailResponseDto
-                .builder()
-                .answerIds(answerIds)
-                .content(node.getQuestion())
-                .build();
+        return GetNodeDetailResponseDto.toDto(node, answers);
     }
 }

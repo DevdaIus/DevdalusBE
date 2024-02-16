@@ -26,7 +26,6 @@ import static site.devdalus.ariadne.dto.NodeDto.*;
 @SpringBootTest
 @Transactional
 @EnableJpaAuditing
-@Slf4j
 class NodeServiceTest {
     @Autowired
     private BoardRepository boardRepository;
