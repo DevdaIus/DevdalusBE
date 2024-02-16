@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import site.devdalus.ariadne.domain.Answer;
 import site.devdalus.ariadne.domain.Board;
 import site.devdalus.ariadne.domain.Node;
-import site.devdalus.ariadne.dto.NodeDto;
 import site.devdalus.ariadne.dto.NodeDto.*;
 import site.devdalus.ariadne.repository.AnswerRepository;
 import site.devdalus.ariadne.repository.BoardRepository;
@@ -15,7 +14,6 @@ import site.devdalus.ariadne.repository.NodeRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class NodeService {
