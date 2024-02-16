@@ -80,7 +80,6 @@ public class NodeService {
     public void updateNode(UpdateNodeDto updateNodeDto, UUID nodeId) {
         Node node = nodeRepository.findById(nodeId).orElseThrow(() -> new RuntimeException("Node not found"));
         node.setQuestion(updateNodeDto.content);
-        nodeRepository.save(node);
     }
 
     // TODO need transaction ??

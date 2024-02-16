@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.test.context.ActiveProfiles;
 import site.devdalus.ariadne.constant.AnswerContentType;
+import site.devdalus.ariadne.constant.NodeDirection;
 import site.devdalus.ariadne.domain.Answer;
 import site.devdalus.ariadne.domain.Board;
 import site.devdalus.ariadne.domain.Node;
@@ -39,6 +40,7 @@ public class AnswerRepositoryTest {
                 .builder()
                 .question("question test")
                 .board(board)
+                .nodeDirection(NodeDirection.RIGHT)
                 .build();
         nodeRepository.save(node);
     }
