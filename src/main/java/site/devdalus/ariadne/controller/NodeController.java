@@ -30,12 +30,14 @@ public class NodeController {
     }
 
     @PatchMapping("/{nodeId}")
-    public ResponseEntity<Void> update(final @RequestBody @Valid UpdateNodeDto updateNode, final @PathVariable("nodeId") UUID nodeId) {
+    public ResponseEntity<Void> update(final @RequestBody @Valid UpdateNodeDto updateNodeDto, final @PathVariable("nodeId") UUID nodeId) {
+        nodeService.updateNode(updateNodeDto, nodeId);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{nodeId}")
-    public ResponseEntity<Void> delete(final @PathVariable("nodeId") UUID nodeId) {
+    public ResponseEntity<Void> remove(final @PathVariable("nodeId") UUID nodeId) {
+        nodeService.removeNode(nodeId);
         return ResponseEntity.noContent().build();
     }
 

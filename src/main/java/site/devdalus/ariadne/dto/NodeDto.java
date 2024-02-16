@@ -5,6 +5,7 @@ import lombok.*;
 import site.devdalus.ariadne.constant.NodeDirection;
 import site.devdalus.ariadne.validator.ValidEnum;
 
+import java.util.List;
 import java.util.UUID;
 
 public class NodeDto {
@@ -47,11 +48,11 @@ public class NodeDto {
     @NoArgsConstructor(force = true)
     public static class GetNodeResponseDto {
         public final String summary;
-        public final UUID[] childNodeIds;
+        public final List<UUID> childNodeIds;
         public final NodeDirection direction;
 
         @Builder
-        public GetNodeResponseDto(String summary, UUID[] childNodeIds, NodeDirection direction) {
+        public GetNodeResponseDto(String summary, List<UUID> childNodeIds, NodeDirection direction) {
             this.summary = summary;
             this.childNodeIds = childNodeIds;
             this.direction = direction;
@@ -74,11 +75,10 @@ public class NodeDto {
     @NoArgsConstructor(force = true)
     public static class GetNodeDetailResponseDto {
         public final String content;
-
-        public final UUID[] answerIds;
+        public final List<UUID> answerIds;
 
         @Builder
-        public GetNodeDetailResponseDto(String content, UUID[] answerIds) {
+        public GetNodeDetailResponseDto(String content, List<UUID> answerIds) {
             this.content = content;
             this.answerIds = answerIds;
         }

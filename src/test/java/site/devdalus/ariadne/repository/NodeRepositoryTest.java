@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.test.context.ActiveProfiles;
+import site.devdalus.ariadne.constant.NodeDirection;
 import site.devdalus.ariadne.domain.Board;
 import site.devdalus.ariadne.domain.Node;
 
@@ -41,7 +42,7 @@ public class NodeRepositoryTest {
     @Test
     public void save() {
         //given
-        Node node = new Node(board, "What is hoisting?", null);
+        Node node = new Node(board, "What is hoisting?", null, NodeDirection.RIGHT);
 
         //when
         nodeRepository.save(node);
@@ -54,7 +55,7 @@ public class NodeRepositoryTest {
     @Test
     public void update() {
 
-        Node node = new Node(board, "What is hoisting?", null);
+        Node node = new Node(board, "What is hoisting?", null, NodeDirection.RIGHT);
         nodeRepository.save(node);
         Node foundNode = nodeRepository.findAll().getFirst();
         foundNode.setQuestion("What is execution context?");
@@ -65,7 +66,7 @@ public class NodeRepositoryTest {
 
     @Test
     public void delete() {
-        Node node = new Node(board, "What is hoisting?", null);
+        Node node = new Node(board, "What is hoisting?", null, NodeDirection.RIGHT);
         nodeRepository.save(node);
         Node foundNode = nodeRepository.findAll().getFirst();
         nodeRepository.delete(foundNode);
