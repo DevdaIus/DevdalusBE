@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import site.devdalus.ariadne.domain.Board;
+import site.devdalus.ariadne.exception.ResourceNotExistException;
 import site.devdalus.ariadne.repository.BoardRepository;
 
 import java.util.UUID;
@@ -81,6 +82,12 @@ class BoardControllerTest {
                 .andExpect(status().isNoContent())
                 .andReturn();
 
+        Board updatedBoard = boardRepository
+                .findById(board.getBoardId())
+                .orElseThrow(ResourceNotExistException::new);
+
+        assertThat(updatedBoard.getSubject()).isEqualTo(newSubject);
+
     }
 
     @Test
@@ -91,5 +98,7 @@ class BoardControllerTest {
                 .perform(delete("/v1/board/" + uuid))
                 .andReturn();
         assertThat(result.getResponse().getStatus()).isEqualTo(204);
+
+
     }
 }

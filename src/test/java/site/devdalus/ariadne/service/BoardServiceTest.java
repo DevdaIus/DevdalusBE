@@ -19,11 +19,8 @@ import static site.devdalus.ariadne.dto.BoardDto.*;
 
 
 @SpringBootTest
+@Transactional
 class BoardServiceTest {
-
-
-    //컨트롤러 테스트 (통합테스트)
-    //update 했을때 반환 비울지 다시 돌려줄지
 
     @Autowired
     private BoardService boardService;
@@ -33,7 +30,6 @@ class BoardServiceTest {
 
 
     @Test
-    @Transactional
     void getBoard() {
         Board board = boardRepository.save(new Board("javascript"));
 
@@ -45,7 +41,6 @@ class BoardServiceTest {
 
 
     @Test
-    @Transactional
     void createBoard() {
         CreateBoardDto createBoardDto = new CreateBoardDto("javascript");
         CreateBoardResponseDto createBoardResponseDto = boardService.createBoard(createBoardDto);
@@ -58,7 +53,6 @@ class BoardServiceTest {
     }
 
     @Test
-    @Transactional
     void updateBoard() {
         Board board = boardRepository.save(new Board("javascript"));
 
@@ -73,7 +67,6 @@ class BoardServiceTest {
     }
 
     @Test
-    @Transactional
     void removeBoard() {
         Board board = boardRepository.save(new Board("javascript"));
 

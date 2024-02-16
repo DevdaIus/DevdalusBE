@@ -28,9 +28,10 @@ public class BoardDto {
     @NoArgsConstructor(force = true)
     public static class GetBoardResponseDto {
 
-        @NotNull(message = "rootNodeId is required")
+        @NotNull
         private final UUID rootNodeId;
 
+        @NotNull
         private final String subject;
 
         @Builder
@@ -85,8 +86,8 @@ public class BoardDto {
     @NoArgsConstructor(force = true)
     public static class UpdateBoardDto {
 
-        @NotNull
-        private final UUID boardId;
+        @Setter
+        private UUID boardId;
 
         @NotNull
         @NotBlank
@@ -102,8 +103,8 @@ public class BoardDto {
     @Getter
     @NoArgsConstructor(force = true)
     public static class RemoveBoardDto {
-        @NotNull
-        private final UUID boardId;
+        @Setter
+        private UUID boardId;
 
         @Builder
         public RemoveBoardDto(UUID boardId) {
