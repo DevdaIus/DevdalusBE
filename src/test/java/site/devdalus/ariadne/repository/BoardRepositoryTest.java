@@ -14,7 +14,6 @@ import site.devdalus.ariadne.domain.Board;
 import java.util.List;
 
 @DataJpaTest
-@EnableJpaAuditing
 @ActiveProfiles("test")
 public class BoardRepositoryTest {
 

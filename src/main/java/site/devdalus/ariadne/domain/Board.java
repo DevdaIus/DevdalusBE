@@ -21,9 +21,11 @@ public class Board {
     @UuidGenerator
     private UUID boardId;
 
+    @Setter
     @Column(columnDefinition = "TEXT", nullable = false)
     private String subject;
 
+    @UuidGenerator
     @Column(name = "root_node_id")
     private UUID rootNodeId;
 
@@ -39,6 +41,7 @@ public class Board {
     public Board(String subject) {
         this.subject = subject;
     }
+
 
 }
 
