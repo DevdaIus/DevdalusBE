@@ -1,10 +1,10 @@
 package site.devdalus.ariadne.service;
 
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.hibernate.Remove;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import site.devdalus.ariadne.domain.Board;
 import site.devdalus.ariadne.dto.BoardDto;
 import site.devdalus.ariadne.exception.ResourceNotExistException;
@@ -17,13 +17,13 @@ import static site.devdalus.ariadne.dto.BoardDto.*;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    @Transactional
+    
     public GetBoardResponseDto getBoard(GetBoardDto getBoardDto) {
-        //TODO : 컨트롤러단 ExceptionHandler
         Board board = boardRepository
                 .findById(getBoardDto.getBoardId())
                 .orElseThrow(ResourceNotExistException::new);

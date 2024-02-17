@@ -39,12 +39,15 @@ public class BoardController {
 
     @PatchMapping("/{boardId}")
     public ResponseEntity<Void> updateBoard(final @RequestBody @Valid UpdateBoardDto updateBoardDto, final @PathVariable UUID boardId) {
+
+        updateBoardDto.setBoardId(boardId);
         boardService.updateBoard(updateBoardDto);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{boardId}")
-    public ResponseEntity<Void> removeBoard(final @PathVariable UUID boardId) {
+    public ResponseEntity<Void> removeBoard(@PathVariable UUID boardId) {
+        
         RemoveBoardDto removeBoardDto = new RemoveBoardDto(boardId);
         boardService.removeBoard(removeBoardDto);
         return ResponseEntity.noContent().build();
