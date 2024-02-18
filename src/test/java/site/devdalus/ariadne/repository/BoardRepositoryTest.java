@@ -25,7 +25,7 @@ public class BoardRepositoryTest {
         //given
         Board board = new Board("Javascript");
 
-        //whe
+        //when
         boardRepository.save(board);
         Board foundBoard = boardRepository.findAll().getFirst();
 
