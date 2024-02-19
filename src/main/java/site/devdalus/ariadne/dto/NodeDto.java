@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class NodeDto {
+    private final static int SUMMARY_LENGTH = 17;
     @Getter
     @NoArgsConstructor(force = true)
     public static class CreateNodeDto {
@@ -54,8 +55,8 @@ public class NodeDto {
 
     // TODO summary length
     private static String makeSummary(String content) {
-        if (content.length() < 17) return content;
-        return content.substring(0, 15) + "...";
+        if (content.length() < SUMMARY_LENGTH) return content;
+        return content.substring(0, SUMMARY_LENGTH - 2) + "...";
     }
 
     @NoArgsConstructor(force = true)
