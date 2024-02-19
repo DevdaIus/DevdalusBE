@@ -1,12 +1,13 @@
 package site.devdalus.ariadne.service;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import site.devdalus.ariadne.domain.Answer;
 import site.devdalus.ariadne.domain.Board;
 import site.devdalus.ariadne.domain.Node;
 import site.devdalus.ariadne.dto.NodeDto.*;
+import site.devdalus.ariadne.exception.ResourceNotExistException;
 import site.devdalus.ariadne.repository.AnswerRepository;
 import site.devdalus.ariadne.repository.BoardRepository;
 import site.devdalus.ariadne.repository.NodeRepository;
@@ -16,6 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Transactional(readOnly = true)
 public class NodeService {
     private final BoardRepository boardRepository;
     private final NodeRepository nodeRepository;
@@ -27,9 +29,10 @@ public class NodeService {
         this.answerRepository = answerRepository;
     }
 
+    @Transactional
     public CreateNodeResponseDto createNode(CreateNodeDto createNodeDto) {
         // TODO exception handler
-        Board board = boardRepository.findById(createNodeDto.boardId).orElseThrow(() -> new RuntimeException("Node not found"));
+        Board board = boardRepository.findById(createNodeDto.boardId).orElseThrow(() -> new ResourceNotExistException("Node not found."));
 
         Node node = Node
                 .builder()
@@ -44,8 +47,7 @@ public class NodeService {
     }
 
     public GetNodeResponseDto getNode(UUID nodeId) {
-        // TODO exception handler
-        Node node = nodeRepository.findById(nodeId).orElseThrow(() -> new RuntimeException("Node not found"));
+        Node node = nodeRepository.findById(nodeId).orElseThrow(() -> new ResourceNotExistException("Node not found."));
 
         List<Node> nodes = nodeRepository.findByParentId(nodeId);
 
@@ -54,7 +56,7 @@ public class NodeService {
 
     @Transactional
     public void updateNode(UpdateNodeDto updateNodeDto, UUID nodeId) {
-        Node node = nodeRepository.findById(nodeId).orElseThrow(() -> new RuntimeException("Node not found"));
+        Node node = nodeRepository.findById(nodeId).orElseThrow(() -> new ResourceNotExistException("Node not found."));
         node.setQuestion(updateNodeDto.content);
     }
 
@@ -73,7 +75,7 @@ public class NodeService {
     }
 
     public GetNodeDetailResponseDto getNodeDetail(UUID nodeId) {
-        Node node = nodeRepository.findById(nodeId).orElseThrow(() -> new RuntimeException("Node not found"));
+        Node node = nodeRepository.findById(nodeId).orElseThrow(() -> new ResourceNotExistException("Node not found."));
         List<Answer> answers = answerRepository.findByNode(node);
 
         return GetNodeDetailResponseDto.toDto(node, answers);
