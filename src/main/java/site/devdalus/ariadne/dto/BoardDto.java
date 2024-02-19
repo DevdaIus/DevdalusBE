@@ -3,6 +3,7 @@ package site.devdalus.ariadne.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import jakarta.validation.constraints.NotNull;
+import site.devdalus.ariadne.domain.Board;
 
 
 import java.util.UUID;
@@ -27,13 +28,24 @@ public class BoardDto {
     @NoArgsConstructor(force = true)
     public static class GetBoardResponseDto {
 
-        @NotNull(message = "rootNodeId is required")
+        @NotNull
         private final UUID rootNodeId;
 
+        @NotNull
+        private final String subject;
+
         @Builder
-        public GetBoardResponseDto(UUID rootNodeId) {
+        public GetBoardResponseDto(UUID rootNodeId, String subject) {
             this.rootNodeId = rootNodeId;
+            this.subject = subject;
         }
+
+
+        public static GetBoardResponseDto toDto(Board board) {
+            return new GetBoardResponseDto(board.getRootNodeId(), board.getSubject());
+        }
+
+
     }
 
     @Getter
@@ -48,6 +60,7 @@ public class BoardDto {
         public CreateBoardDto(String subject) {
             this.subject = subject;
         }
+
     }
 
     @Getter
@@ -61,14 +74,20 @@ public class BoardDto {
         public CreateBoardResponseDto(UUID boardId) {
             this.boardId = boardId;
         }
+
+        public static CreateBoardResponseDto toDto(Board board) {
+            return new CreateBoardResponseDto(board.getBoardId());
+        }
+
+
     }
 
     @Getter
     @NoArgsConstructor(force = true)
     public static class UpdateBoardDto {
 
-        @NotNull
-        private final UUID boardId;
+        @Setter
+        private UUID boardId;
 
         @NotNull
         @NotBlank
@@ -78,6 +97,18 @@ public class BoardDto {
         public UpdateBoardDto(UUID boardId, String subject) {
             this.boardId = boardId;
             this.subject = subject;
+        }
+    }
+
+    @Getter
+    @NoArgsConstructor(force = true)
+    public static class RemoveBoardDto {
+        @Setter
+        private UUID boardId;
+
+        @Builder
+        public RemoveBoardDto(UUID boardId) {
+            this.boardId = boardId;
         }
     }
 

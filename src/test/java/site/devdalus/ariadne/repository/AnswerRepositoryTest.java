@@ -16,7 +16,6 @@ import site.devdalus.ariadne.domain.Node;
 import java.util.List;
 
 @DataJpaTest
-@EnableJpaAuditing
 @ActiveProfiles("test")
 public class AnswerRepositoryTest {
     @Autowired
@@ -45,6 +44,7 @@ public class AnswerRepositoryTest {
         nodeRepository.save(node);
     }
 
+
     @Test
     public void save() {
         // given
@@ -58,7 +58,6 @@ public class AnswerRepositoryTest {
         // when
         answerRepository.save(answer);
         Answer foundAnswer = answerRepository.findAll().getFirst();
-
         // then
         Assertions.assertThat(foundAnswer.getContent()).isEqualTo(answer.getContent());
     }
