@@ -31,7 +31,9 @@ public class Answer {
     private Node node;
 
     @Column(name = "content_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private AnswerContentType answerContentType;
+
     @Setter
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
@@ -50,5 +52,4 @@ public class Answer {
         this.content = content;
         this.node = node;
     }
-
 }

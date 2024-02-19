@@ -41,7 +41,7 @@ public class NodeRepositoryTest {
     @Test
     public void save() {
         //given
-        Node node = new Node(board, "What is hoisting?", null, NodeDirection.RIGHT);
+        Node node = new Node(board, "What is hoisting?", null, NodeDirection.CENTER);
 
         //when
         nodeRepository.save(node);
@@ -49,6 +49,7 @@ public class NodeRepositoryTest {
 
         //then
         assertThat(node.getQuestion()).isEqualTo(foundNode.getQuestion());
+        assertThat(node.getNodeDirection()).isEqualTo(foundNode.getNodeDirection());
     }
 
     @Test

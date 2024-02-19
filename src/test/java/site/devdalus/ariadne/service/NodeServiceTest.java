@@ -55,7 +55,7 @@ class NodeServiceTest {
 
         rootNode = Node
                 .builder()
-                .nodeDirection(NodeDirection.RIGHT)
+                .nodeDirection(NodeDirection.CENTER)
                 .question("Java")
                 .board(board)
                 .build();
@@ -79,7 +79,7 @@ class NodeServiceTest {
         CreateNodeDto createNodeDto = CreateNodeDto
                 .builder()
                 .parentId(rootNode.getNodeId())
-                .direction(NodeDirection.RIGHT)
+                .direction(NodeDirection.CENTER)
                 .boardId(board.getBoardId())
                 .content("Java is trash. Python is God. Thank you.")
                 .build();
