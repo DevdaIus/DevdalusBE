@@ -27,7 +27,6 @@ public class Node {
     @Column(name = "node_id")
     private UUID nodeId;
 
-
     @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
@@ -35,12 +34,12 @@ public class Node {
     @Column(name = "parent_id")
     private UUID parentId;
 
-
     @Setter
     @Column(columnDefinition = "TEXT", nullable = false)
     private String question;
 
-    @Column(name = "node_direction", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "node_direction", nullable = false)
+    @Enumerated(EnumType.STRING)
     private NodeDirection nodeDirection;
 
     @CreatedDate
