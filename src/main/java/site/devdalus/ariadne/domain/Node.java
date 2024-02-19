@@ -10,6 +10,7 @@ import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import site.devdalus.ariadne.constant.NodeDirection;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -39,6 +40,8 @@ public class Node {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String question;
 
+    @Column(name = "node_direction", columnDefinition = "TEXT", nullable = false)
+    private NodeDirection nodeDirection;
 
     @CreatedDate
     @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
@@ -49,10 +52,11 @@ public class Node {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Node(Board board, String question, UUID parentId) {
+    public Node(Board board, String question, UUID parentId, NodeDirection nodeDirection) {
         this.board = board;
         this.parentId = parentId;
         this.question = question;
+        this.nodeDirection = nodeDirection;
     }
 
 }
