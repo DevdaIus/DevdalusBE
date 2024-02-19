@@ -63,7 +63,7 @@ class AnswerControllerTest {
                 .build();
         nodeRepository.save(rootNode);
 
-        node1 = new Node(board, "Java1. go. python. javascript. c++. let's go", rootNode.getNodeId(), NodeDirection.RIGHT);
+        node1 = new Node(board, "Java1. go. python. javascript. c++. let's go", rootNode.getNodeId(), NodeDirection.CENTER);
         nodeRepository.save(node1);
 
         answer1 = new Answer(AnswerContentType.TEXT, "asdfasdfasdf", node1);
