@@ -86,17 +86,17 @@ class NodeServiceTest {
 
         CreateNodeResponseDto createNodeResponseDto = nodeService.createNode(createNodeDto);
 
-        Optional<Node> node = nodeRepository.findById(createNodeResponseDto.nodeId);
-        assertThat(node.get().getNodeId()).isEqualTo(createNodeResponseDto.nodeId);
-        assertThat(createNodeResponseDto.summary).isEqualTo("Java is trash. ...");
+        Optional<Node> node = nodeRepository.findById(createNodeResponseDto.getNodeId());
+        assertThat(node.get().getNodeId()).isEqualTo(createNodeResponseDto.getNodeId());
+        assertThat(createNodeResponseDto.getSummary()).isEqualTo("Java is trash. ...");
     }
 
     @Test
     void getNode() {
         GetNodeResponseDto getNodeResponseDto = nodeService.getNode(node1.getNodeId());
 
-        assertThat(getNodeResponseDto.childNodeIds).contains(node2.getNodeId(), node3.getNodeId());
-        assertThat(getNodeResponseDto.summary).isEqualTo("Java1. go. pyth...");
+        assertThat(getNodeResponseDto.getChildNodeIds()).contains(node2.getNodeId(), node3.getNodeId());
+        assertThat(getNodeResponseDto.getSummary()).isEqualTo("Java1. go. pyth...");
     }
 
     @Test
@@ -125,7 +125,7 @@ class NodeServiceTest {
         GetNodeDetailResponseDto nodeDetail = nodeService.getNodeDetail(node1.getNodeId());
 
         List<Answer> answers = answerRepository.findByNode(node1);
-        assertThat(nodeDetail.content).isEqualTo(node1.getQuestion());
-        assertThat(nodeDetail.answerIds).contains(answers.getFirst().getAnswerId());
+        assertThat(nodeDetail.getContent()).isEqualTo(node1.getQuestion());
+        assertThat(nodeDetail.getAnswerIds()).contains(answers.getFirst().getAnswerId());
     }
 }

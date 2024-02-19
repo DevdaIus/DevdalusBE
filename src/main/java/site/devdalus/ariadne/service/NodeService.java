@@ -32,14 +32,14 @@ public class NodeService {
     @Transactional
     public CreateNodeResponseDto createNode(CreateNodeDto createNodeDto) {
         // TODO exception handler
-        Board board = boardRepository.findById(createNodeDto.boardId).orElseThrow(() -> new ResourceNotExistException("Node not found."));
+        Board board = boardRepository.findById(createNodeDto.getBoardId()).orElseThrow(() -> new ResourceNotExistException("Node not found."));
 
         Node node = Node
                 .builder()
                 .board(board)
-                .question(createNodeDto.content)
-                .parentId(createNodeDto.parentId)
-                .nodeDirection(createNodeDto.direction)
+                .question(createNodeDto.getContent())
+                .parentId(createNodeDto.getParentId())
+                .nodeDirection(createNodeDto.getDirection())
                 .build();
         Node savedNode = nodeRepository.save(node);
 
@@ -57,7 +57,7 @@ public class NodeService {
     @Transactional
     public void updateNode(UpdateNodeDto updateNodeDto, UUID nodeId) {
         Node node = nodeRepository.findById(nodeId).orElseThrow(() -> new ResourceNotExistException("Node not found."));
-        node.setQuestion(updateNodeDto.content);
+        node.setQuestion(updateNodeDto.getContent());
     }
 
     // TODO need transaction ??

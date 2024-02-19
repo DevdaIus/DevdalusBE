@@ -16,16 +16,16 @@ public class NodeDto {
     @NoArgsConstructor(force = true)
     public static class CreateNodeDto {
         @NotNull
-        public final UUID parentId;
+        private final UUID parentId;
 
         @NotNull
-        public final String content;
+        private final String content;
 
         @NotNull
-        public final UUID boardId;
+        private final UUID boardId;
 
         @ValidEnum(enumClass = NodeDirection.class)
-        public final NodeDirection direction;
+        private final NodeDirection direction;
 
         @Builder
         public CreateNodeDto(UUID parentId, String content, UUID boardId, NodeDirection direction) {
@@ -36,10 +36,11 @@ public class NodeDto {
         }
     }
 
+    @Getter
     @NoArgsConstructor(force = true)
     public static class CreateNodeResponseDto {
-        public final UUID nodeId;
-        public final String summary;
+        private final UUID nodeId;
+        private final String summary;
 
         @Builder
         public CreateNodeResponseDto(UUID nodeId, String summary) {
@@ -59,11 +60,12 @@ public class NodeDto {
         return content.substring(0, SUMMARY_LENGTH - 2) + "...";
     }
 
+    @Getter
     @NoArgsConstructor(force = true)
     public static class GetNodeResponseDto {
-        public final String summary;
-        public final List<UUID> childNodeIds;
-        public final NodeDirection direction;
+        private final String summary;
+        private final List<UUID> childNodeIds;
+        private final NodeDirection direction;
 
         @Builder
         public GetNodeResponseDto(String summary, List<UUID> childNodeIds, NodeDirection direction) {
@@ -86,7 +88,7 @@ public class NodeDto {
     @NoArgsConstructor(force = true)
     public static class UpdateNodeDto {
         @NotNull
-        public final String content;
+        private final String content;
 
         @Builder
         public UpdateNodeDto(String content) {
@@ -97,8 +99,8 @@ public class NodeDto {
     @Getter
     @NoArgsConstructor(force = true)
     public static class GetNodeDetailResponseDto {
-        public final String content;
-        public final List<UUID> answerIds;
+        private final String content;
+        private final List<UUID> answerIds;
 
         @Builder
         public GetNodeDetailResponseDto(String content, List<UUID> answerIds) {
