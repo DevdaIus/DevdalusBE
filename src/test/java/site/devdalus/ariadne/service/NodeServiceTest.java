@@ -1,11 +1,11 @@
 package site.devdalus.ariadne.service;
 
-import lombok.extern.slf4j.Slf4j;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.transaction.annotation.Transactional;
 import site.devdalus.ariadne.constant.AnswerContentType;
 import site.devdalus.ariadne.constant.NodeDirection;
@@ -37,6 +37,9 @@ class NodeServiceTest {
 
     @Autowired
     private NodeService nodeService;
+
+    @PersistenceContext
+    EntityManager em;
 
     private Board board;
     private Node rootNode;
@@ -112,12 +115,19 @@ class NodeServiceTest {
     @Test
     void removeNode() {
         nodeService.removeNode(node1.getNodeId());
+        em.flush();
+        em.clear();
 
+        Optional<Node> optionalNode = nodeRepository.findById(node1.getNodeId());
         Optional<Node> optionalNode1 = nodeRepository.findById(node2.getNodeId());
         Optional<Node> optionalNode2 = nodeRepository.findById(node3.getNodeId());
 
+        List<Answer> answers = answerRepository.findByNode(node1);
+
+        assertThat(optionalNode.isEmpty()).isTrue();
         assertThat(optionalNode1.isEmpty()).isTrue();
         assertThat(optionalNode2.isEmpty()).isTrue();
+        assertThat(answers.size()).isEqualTo(0);
     }
 
     @Test
