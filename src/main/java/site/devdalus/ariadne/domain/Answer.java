@@ -26,7 +26,7 @@ public class Answer {
     @Column(name = "answer_id")
     private UUID answerId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "node_id")
     private Node node;
 
