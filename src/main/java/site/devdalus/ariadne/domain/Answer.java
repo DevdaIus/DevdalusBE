@@ -19,7 +19,7 @@ import java.util.UUID;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-public class Answer {
+public class Answer extends Base {
 
     @Id
     @UuidGenerator
@@ -37,14 +37,6 @@ public class Answer {
     @Setter
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
-
-    @CreatedDate
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "modified_at", columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalDateTime updatedAt;
 
     @Builder
     public Answer(AnswerContentType answerContentType, String content, Node node) {
