@@ -20,7 +20,7 @@ import java.util.UUID;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-public class Node {
+public class Node extends Base {
 
     @Id
     @UuidGenerator
@@ -41,14 +41,6 @@ public class Node {
     @Column(name = "node_direction", nullable = false)
     @Enumerated(EnumType.STRING)
     private NodeDirection nodeDirection;
-
-    @CreatedDate
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "modified_at", columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalDateTime updatedAt;
 
     @Builder
     public Node(Board board, String question, UUID parentId, NodeDirection nodeDirection) {
