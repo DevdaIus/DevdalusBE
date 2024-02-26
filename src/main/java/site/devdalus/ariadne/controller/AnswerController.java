@@ -25,8 +25,8 @@ public class AnswerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createAnswer(final @RequestBody @Valid CreateAnswerDto createAnswerDto) {
-        answerService.createAnswer(createAnswerDto);
+    public CreateAnswerResponseDto createAnswer(final @RequestBody @Valid CreateAnswerDto createAnswerDto) {
+        return answerService.createAnswer(createAnswerDto);
     }
 
     @GetMapping("/{answerId}")

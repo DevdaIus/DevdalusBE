@@ -3,10 +3,11 @@ package site.devdalus.ariadne.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import site.devdalus.ariadne.domain.Answer;
 
 import java.util.UUID;
 
-public class AnswerDto extends BaseDto {
+public class AnswerDto {
     @Getter
     @NoArgsConstructor(force = true)
     public static class CreateAnswerDto {
@@ -20,6 +21,22 @@ public class AnswerDto extends BaseDto {
         }
     }
 
+    @Getter
+    @NoArgsConstructor(force = true)
+    public static class CreateAnswerResponseDto {
+        private final UUID answerId;
+
+        @Builder
+        public CreateAnswerResponseDto(UUID answerId) {
+            this.answerId = answerId;
+        }
+
+        public static CreateAnswerResponseDto toDto(Answer answer) {
+            return new CreateAnswerResponseDto(answer.getAnswerId());
+        }
+    }
+
+    @Getter
     public static class GetAnswerResponseDto {
         private final String content;
 

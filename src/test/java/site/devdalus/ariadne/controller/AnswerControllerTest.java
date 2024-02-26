@@ -82,14 +82,16 @@ class AnswerControllerTest {
                 .perform(post("/v1/answer")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createAnswerDto)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.answerId").exists());
     }
 
     @Test
     void getAnswer() throws Exception {
         mockMvc
                 .perform(get("/v1/answer/" + answer1.getAnswerId()))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").value("asdfasdfasdf"));
     }
 
     @Test

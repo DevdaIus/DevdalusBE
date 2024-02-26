@@ -1,11 +1,12 @@
 package site.devdalus.ariadne.service;
 
-import lombok.extern.slf4j.Slf4j;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.transaction.annotation.Transactional;
 import site.devdalus.ariadne.constant.AnswerContentType;
 import site.devdalus.ariadne.constant.NodeDirection;
@@ -38,12 +39,17 @@ class NodeServiceTest {
     @Autowired
     private NodeService nodeService;
 
+    @PersistenceContext
+    EntityManager em;
+
     private Board board;
     private Node rootNode;
     private Node node1;
     private Node node2;
     private Node node3;
     private Answer answer1;
+
+    private Answer answer2;
 
     @BeforeEach
     void init() {
@@ -62,16 +68,20 @@ class NodeServiceTest {
         nodeRepository.save(rootNode);
 
         node1 = new Node(board, "Java1. go. python. javascript. c++. let's go", rootNode.getNodeId(), NodeDirection.RIGHT);
-        nodeRepository.save(node1);
+        node1 = nodeRepository.save(node1);
 
         node2 = new Node(board, "Java2", node1.getNodeId(), NodeDirection.RIGHT);
-        nodeRepository.save(node2);
+        node2 = nodeRepository.save(node2);
 
         node3 = new Node(board, "Java3", node1.getNodeId(), NodeDirection.RIGHT);
-        nodeRepository.save(node3);
+        node3 = nodeRepository.save(node3);
 
         answer1 = new Answer(AnswerContentType.TEXT, "asdfasdfasdf", node1);
-        answerRepository.save(answer1);
+        answer1 = answerRepository.save(answer1);
+
+        answer2 = answerRepository.save(new Answer(AnswerContentType.TEXT, "test", node3));
+        em.flush();
+        em.clear();
     }
 
     @Test
@@ -112,12 +122,19 @@ class NodeServiceTest {
     @Test
     void removeNode() {
         nodeService.removeNode(node1.getNodeId());
+        em.flush();
+        em.clear();
 
+        Optional<Node> optionalNode = nodeRepository.findById(node1.getNodeId());
         Optional<Node> optionalNode1 = nodeRepository.findById(node2.getNodeId());
         Optional<Node> optionalNode2 = nodeRepository.findById(node3.getNodeId());
 
+        Optional<Answer> answerOptional = answerRepository.findById(answer1.getAnswerId());
+
+        assertThat(optionalNode.isEmpty()).isTrue();
         assertThat(optionalNode1.isEmpty()).isTrue();
         assertThat(optionalNode2.isEmpty()).isTrue();
+        assertThat(answerOptional.isEmpty()).isTrue();
     }
 
     @Test
@@ -127,5 +144,13 @@ class NodeServiceTest {
         List<Answer> answers = answerRepository.findByNode(node1);
         assertThat(nodeDetail.getContent()).isEqualTo(node1.getQuestion());
         assertThat(nodeDetail.getAnswerIds()).contains(answers.getFirst().getAnswerId());
+    }
+
+    @Test
+    void removeSpecificNode() {
+        nodeService.removeNode(node3.getNodeId());
+
+        Optional<Answer> answerOptional = answerRepository.findById(answer2.getAnswerId());
+        assertThat(answerOptional.isEmpty()).isTrue();
     }
 }
