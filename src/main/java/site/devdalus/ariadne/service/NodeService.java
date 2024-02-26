@@ -11,6 +11,7 @@ import site.devdalus.ariadne.exception.ResourceNotExistException;
 import site.devdalus.ariadne.repository.AnswerRepository;
 import site.devdalus.ariadne.repository.BoardRepository;
 import site.devdalus.ariadne.repository.NodeRepository;
+import site.devdalus.ariadne.strategy.node.NodeRemoveStrategy;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,11 +23,15 @@ public class NodeService {
     private final BoardRepository boardRepository;
     private final NodeRepository nodeRepository;
     private final AnswerRepository answerRepository;
+
+    private final NodeRemoveStrategy nodeRemoveStrategy;
+
     @Autowired
-    public NodeService(BoardRepository boardRepository, NodeRepository nodeRepository, AnswerRepository answerRepository) {
+    public NodeService(BoardRepository boardRepository, NodeRepository nodeRepository, AnswerRepository answerRepository, NodeRemoveStrategy nodeRemoveStrategy) {
         this.boardRepository = boardRepository;
         this.nodeRepository = nodeRepository;
         this.answerRepository = answerRepository;
+        this.nodeRemoveStrategy = nodeRemoveStrategy;
     }
 
     @Transactional
@@ -71,7 +76,7 @@ public class NodeService {
 
         Optional<Node> node = nodeRepository.findById(nodeId);
         if (node.isEmpty()) return;
-        nodeRepository.delete(node.get());
+        nodeRemoveStrategy.remove(node.get());
     }
 
     public GetNodeDetailResponseDto getNodeDetail(UUID nodeId) {

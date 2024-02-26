@@ -29,7 +29,6 @@ public class Answer {
 
     @ManyToOne
     @JoinColumn(name = "node_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Node node;
 
     @Column(name = "content_type", nullable = false)

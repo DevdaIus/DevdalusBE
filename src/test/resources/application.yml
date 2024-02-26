@@ -1,8 +1,11 @@
 logging:
   level:
-    org:
-      hibernate:
-        SQL: DEBUG
+    ROOT: INFO
+    org.hibernate: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.orm: TRACE
+    org.springframework.transaction: TRACE
+    com.mysql.cj.jdbc: TRACE
 
 spring:
   datasource:

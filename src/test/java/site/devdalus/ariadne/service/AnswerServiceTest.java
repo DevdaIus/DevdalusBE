@@ -1,6 +1,7 @@
 package site.devdalus.ariadne.service;
 
-import org.assertj.core.api.Assertions;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import site.devdalus.ariadne.constant.NodeDirection;
 import site.devdalus.ariadne.domain.Answer;
 import site.devdalus.ariadne.domain.Board;
 import site.devdalus.ariadne.domain.Node;
-import site.devdalus.ariadne.dto.AnswerDto;
 import site.devdalus.ariadne.dto.AnswerDto.CreateAnswerDto;
 import site.devdalus.ariadne.dto.AnswerDto.CreateAnswerResponseDto;
 import site.devdalus.ariadne.dto.AnswerDto.GetAnswerResponseDto;
@@ -42,6 +42,9 @@ class AnswerServiceTest {
     @Autowired
     private AnswerService answerService;
 
+    @PersistenceContext
+    EntityManager em;
+
     private Board board;
     private Node rootNode;
     private Node node1;
@@ -66,16 +69,19 @@ class AnswerServiceTest {
         nodeRepository.save(rootNode);
 
         node1 = new Node(board, "Java1. go. python. javascript. c++. let's go", rootNode.getNodeId(), NodeDirection.RIGHT);
-        nodeRepository.save(node1);
+        node1 = nodeRepository.save(node1);
 
         node2 = new Node(board, "Java2", node1.getNodeId(), NodeDirection.RIGHT);
-        nodeRepository.save(node2);
+        node2 = nodeRepository.save(node2);
 
         node3 = new Node(board, "Java3", node1.getNodeId(), NodeDirection.RIGHT);
-        nodeRepository.save(node3);
+        node3 = nodeRepository.save(node3);
 
         answer1 = new Answer(AnswerContentType.TEXT, "asdfasdfasdf", node1);
-        answerRepository.save(answer1);
+        answer1 = answerRepository.save(answer1);
+
+        em.flush();
+        em.clear();
     }
     @Test
     void createAnswer() {
