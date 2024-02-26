@@ -27,7 +27,7 @@ public class Node extends Base {
     @Column(name = "node_id")
     private UUID nodeId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
 
