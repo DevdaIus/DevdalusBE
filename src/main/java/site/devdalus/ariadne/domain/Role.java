@@ -1,15 +1,13 @@
 package site.devdalus.ariadne.domain;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import site.devdalus.ariadne.constant.RoleName;
 
 import java.util.UUID;
 
@@ -17,7 +15,7 @@ import java.util.UUID;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-public class Role {
+public class Role extends Base {
 
 
     @Id
@@ -25,11 +23,12 @@ public class Role {
     @Column(name = "role_id")
     private UUID roleId;
 
-    @Column(name = "role_name")
-    private String roleName;
+    @Column(name = "role_name", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private RoleName roleName;
 
     @Builder
-    public Role(String roleName) {
+    public Role(RoleName roleName) {
         this.roleName = roleName;
     }
 
