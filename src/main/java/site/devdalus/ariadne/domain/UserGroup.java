@@ -2,6 +2,7 @@ package site.devdalus.ariadne.domain;
 
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
@@ -29,5 +30,11 @@ public class UserGroup {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Group group;
+
+    @Builder
+    public UserGroup(User user, Group group) {
+        this.user = user;
+        this.group = group;
+    }
 
 }
