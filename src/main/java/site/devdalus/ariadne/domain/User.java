@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -16,14 +17,16 @@ import java.util.UUID;
 
 @Entity
 @Getter
+@Table(name = "\"user\"")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-public class User {
+public class User extends Base {
     @Id
     @UuidGenerator
     @Column(name = "user_id")
     private UUID userId;
 
+    @Setter
     @Column(name = "nickname", nullable = false)
     private String nickname;
 
@@ -31,26 +34,20 @@ public class User {
     @Enumerated(EnumType.STRING)
     private LoginType loginType;
 
+    @Setter
     @Column(name = "id", nullable = false)
     private String id;
 
-    @Column(name = "password", nullable = false)
+    @Setter
+    @Column(name = "password")
     private String password;
 
-
-    @CreatedDate
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "modified_at", columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalDateTime updatedAt;
-
     @Builder
-    public User(String id, String password, String nickname) {
+    public User(String id, String password, String nickname, LoginType loginType) {
         this.id = id;
         this.password = password;
         this.nickname = nickname;
+        this.loginType = loginType;
     }
 
 

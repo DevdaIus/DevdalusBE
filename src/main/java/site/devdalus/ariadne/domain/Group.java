@@ -1,9 +1,6 @@
 package site.devdalus.ariadne.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,11 +14,11 @@ import java.util.UUID;
 
 @Entity
 @Getter
+@Table(name = "\"group\"")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-public class Group {
-
-
+public class Group extends Base {
+    
     @Id
     @UuidGenerator
     @Column(name = "group_id")
@@ -29,15 +26,6 @@ public class Group {
 
     @Column(name = "group_name", nullable = false)
     private String groupName;
-
-
-    @CreatedDate
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "modified_at", columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalDateTime updatedAt;
 
     @Builder
     public Group(String groupName) {

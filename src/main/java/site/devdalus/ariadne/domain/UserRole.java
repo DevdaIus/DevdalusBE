@@ -1,6 +1,7 @@
 package site.devdalus.ariadne.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
@@ -29,5 +30,11 @@ public class UserRole {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @Builder
+    public UserRole(User user, Role role) {
+        this.user = user;
+        this.role = role;
+    }
 
 }

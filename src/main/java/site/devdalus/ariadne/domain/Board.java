@@ -19,6 +19,7 @@ public class Board extends Base {
 
     @Id
     @UuidGenerator
+    @Column(name = "board_id")
     private UUID boardId;
 
     @Setter
