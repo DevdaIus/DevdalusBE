@@ -1,6 +1,7 @@
 package site.devdalus.ariadne.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
@@ -27,5 +28,11 @@ public class Permission extends Base {
     @Column(name = "permission_name", nullable = false)
     @Enumerated(EnumType.STRING)
     private PermissionName permissionName;
+
+    @Builder
+    public Permission(Role role, PermissionName permissionName) {
+        this.role = role;
+        this.permissionName = permissionName;
+    }
 
 }
