@@ -20,16 +20,15 @@ import java.util.UUID;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-public class Answer {
+public class Answer extends Base {
 
     @Id
     @UuidGenerator
     @Column(name = "answer_id")
     private UUID answerId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "node_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Node node;
 
     @Column(name = "content_type", nullable = false)
@@ -39,14 +38,6 @@ public class Answer {
     @Setter
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
-
-    @CreatedDate
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "modified_at", columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalDateTime updatedAt;
 
     @Builder
     public Answer(AnswerContentType answerContentType, String content, Node node) {

@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -21,16 +19,15 @@ import java.util.UUID;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-public class Node {
+public class Node extends Base {
 
     @Id
     @UuidGenerator
     @Column(name = "node_id")
     private UUID nodeId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Board board;
 
     @Column(name = "parent_id")
@@ -43,14 +40,6 @@ public class Node {
     @Column(name = "node_direction", nullable = false)
     @Enumerated(EnumType.STRING)
     private NodeDirection nodeDirection;
-
-    @CreatedDate
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "modified_at", columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalDateTime updatedAt;
 
     @Builder
     public Node(Board board, String question, UUID parentId, NodeDirection nodeDirection) {
