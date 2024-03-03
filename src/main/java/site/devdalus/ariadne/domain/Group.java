@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -18,12 +19,13 @@ import java.util.UUID;
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 public class Group extends Base {
-    
+
     @Id
     @UuidGenerator
     @Column(name = "group_id")
     private UUID groupId;
 
+    @Setter
     @Column(name = "group_name", nullable = false)
     private String groupName;
 
