@@ -34,7 +34,7 @@ public class User {
     @Column(name = "id", nullable = false)
     private String id;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
 
@@ -47,10 +47,11 @@ public class User {
     private LocalDateTime updatedAt;
 
     @Builder
-    public User(String id, String password, String nickname) {
+    public User(String id, String password, String nickname, LoginType loginType) {
         this.id = id;
         this.password = password;
         this.nickname = nickname;
+        this.loginType = loginType;
     }
 
 
